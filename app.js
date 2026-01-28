@@ -287,20 +287,18 @@
         const allCards = Array.from(document.querySelectorAll('.loyalty-card'));
         const selectedIndex = allCards.findIndex(el => el.dataset.id === cardId);
 
-        // Move selected card to vertical center of container
-        const container = document.querySelector('.cards-container');
-        const containerRect = container.getBoundingClientRect();
-        const containerCenterY = containerRect.top + (containerRect.height / 2);
+        // Get the position of the first card (top of the stack)
+        const firstCard = allCards[0];
+        const firstCardTop = firstCard ? firstCard.getBoundingClientRect().top : 0;
 
         allCards.forEach((el, index) => {
             if (el.dataset.id === cardId) {
                 el.classList.add('selected-card');
                 el.classList.remove('slide-away');
 
-                // Calculate how far to move to center the card vertically
-                const cardRect = el.getBoundingClientRect();
-                const cardCenterY = cardRect.top + (cardRect.height / 2);
-                const moveY = containerCenterY - cardCenterY;
+                // Calculate how far to move up to reach the first card's position
+                const cardTop = el.getBoundingClientRect().top;
+                const moveY = firstCardTop - cardTop;
 
                 el.style.transform = `translateY(${moveY}px)`;
             } else {
