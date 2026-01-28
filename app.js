@@ -198,7 +198,11 @@
 
         // Stagger animations by card index
         if (animateIn) {
+            // Start hidden off-screen
+            div.classList.add('pre-animate');
+
             setTimeout(() => {
+                div.classList.remove('pre-animate');
                 div.classList.add('animate-in');
             }, index * 100); // 100ms delay between each card
 

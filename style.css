@@ -239,6 +239,11 @@ body {
     margin-top: 0;
 }
 
+/* Card waiting to animate in - hidden off-screen */
+.loyalty-card.pre-animate {
+    transform: translateY(-100%);
+}
+
 /* Card slide-in animation */
 .loyalty-card.animate-in {
     animation: slideIn 0.4s ease-out forwards;
