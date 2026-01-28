@@ -171,8 +171,9 @@
             elements.cardsContainer.appendChild(elements.emptyState);
         } else {
             elements.emptyState.style.display = 'none';
-            filteredCards.forEach(card => {
-                elements.cardsContainer.appendChild(createCardElement(card));
+            filteredCards.forEach((card, index) => {
+                const cardEl = createCardElement(card, true, index);
+                elements.cardsContainer.appendChild(cardEl);
             });
         }
     }
@@ -190,14 +191,21 @@
         }
     }
 
-    function createCardElement(card, animateIn = true) {
+    function createCardElement(card, animateIn = true, index = 0) {
         const div = document.createElement('div');
-        div.className = animateIn ? 'loyalty-card animate-in' : 'loyalty-card';
+        div.className = 'loyalty-card';
         div.dataset.id = card.id;
 
-        // Remove animate-in class after animation completes
+        // Stagger animations by card index
         if (animateIn) {
-            setTimeout(() => div.classList.remove('animate-in'), 500);
+            div.style.opacity = '0';
+            setTimeout(() => {
+                div.classList.add('animate-in');
+                div.style.opacity = '';
+            }, index * 100); // 100ms delay between each card
+
+            // Remove animate-in class after animation completes
+            setTimeout(() => div.classList.remove('animate-in'), (index * 100) + 500);
         }
 
         // Extract suburb from location name
