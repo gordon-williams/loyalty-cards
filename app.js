@@ -285,27 +285,29 @@
         }
 
         const allCards = Array.from(document.querySelectorAll('.loyalty-card'));
+        const selectedEl = allCards.find(el => el.dataset.id === cardId);
 
-        // Apply all changes
+        // First: slide ALL cards away (including selected)
         allCards.forEach((el) => {
-            if (el.dataset.id === cardId) {
-                el.classList.add('selected-card');
-                el.classList.remove('slide-away');
-            } else {
-                // All other cards slide away
-                el.classList.add('slide-away');
-                el.classList.remove('selected-card');
-            }
+            el.classList.add('slide-away');
+            el.classList.remove('selected-card');
         });
+
+        // After animation completes, show selected card at top
+        setTimeout(() => {
+            if (selectedEl && topCardId === cardId) {
+                selectedEl.classList.remove('slide-away');
+                selectedEl.classList.add('selected-card');
+            }
+        }, 400); // Match the CSS transition duration
     }
 
     function deselectCard() {
         topCardId = null;
         currentCard = null;
 
-        document.querySelectorAll('.loyalty-card').forEach(el => {
-            el.classList.remove('selected-card', 'slide-away');
-        });
+        // Remove selected state and re-render cards with animation
+        renderCards();
     }
 
     function generatePreviewBarcode(card) {
