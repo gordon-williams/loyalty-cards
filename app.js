@@ -204,10 +204,10 @@
             setTimeout(() => {
                 div.classList.remove('pre-animate');
                 div.classList.add('animate-in');
-            }, index * 100); // 100ms delay between each card
+            }, index * 50); // 50ms delay between each card
 
             // Remove animate-in class after animation completes
-            setTimeout(() => div.classList.remove('animate-in'), (index * 100) + 500);
+            setTimeout(() => div.classList.remove('animate-in'), (index * 50) + 300);
         }
 
         // Extract suburb from location name

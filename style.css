@@ -246,7 +246,7 @@ body {
 
 /* Card slide-in animation */
 .loyalty-card.animate-in {
-    animation: slideIn 0.4s ease-out forwards;
+    animation: slideIn 0.25s ease-out forwards;
 }
 
 @keyframes slideIn {
