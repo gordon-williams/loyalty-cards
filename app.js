@@ -300,7 +300,8 @@
                 const cardTop = el.getBoundingClientRect().top;
                 const moveY = firstCardTop - cardTop;
 
-                el.style.transform = `translateY(${moveY}px)`;
+                console.log('selectCard:', { firstCardTop, cardTop, moveY, index });
+                el.style.setProperty('transform', `translateY(${moveY}px)`, 'important');
             } else {
                 // All other cards slide away
                 el.classList.add('slide-away');
