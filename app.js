@@ -198,10 +198,8 @@
 
         // Stagger animations by card index
         if (animateIn) {
-            div.style.opacity = '0';
             setTimeout(() => {
                 div.classList.add('animate-in');
-                div.style.opacity = '';
             }, index * 100); // 100ms delay between each card
 
             // Remove animate-in class after animation completes
