@@ -247,10 +247,9 @@ body {
     visibility: hidden;
 }
 
-/* Selected card - stays in place at top */
+/* Selected card - will be positioned by JS */
 .loyalty-card.selected-card {
     margin-top: 0;
-    transform: translateY(0);
 }
 
 .card-header {
