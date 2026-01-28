@@ -256,6 +256,7 @@ body {
     top: 20px;
     left: 20px;
     right: 20px;
+    transition: none;
     animation: fadeIn 0.3s ease-out;
 }
 
