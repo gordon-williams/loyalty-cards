@@ -297,6 +297,16 @@
 
         console.log('selectCard:', { firstCardTop, selectedCardTop, moveY });
 
+        // Debug: show values on screen
+        let debugEl = document.getElementById('debug-info');
+        if (!debugEl) {
+            debugEl = document.createElement('div');
+            debugEl.id = 'debug-info';
+            debugEl.style.cssText = 'position:fixed;top:60px;left:10px;background:red;color:white;padding:10px;z-index:9999;font-size:14px;';
+            document.body.appendChild(debugEl);
+        }
+        debugEl.innerHTML = `firstCardTop: ${firstCardTop.toFixed(0)}<br>selectedCardTop: ${selectedCardTop.toFixed(0)}<br>moveY: ${moveY.toFixed(0)}`;
+
         // Apply all changes
         allCards.forEach((el) => {
             if (el.dataset.id === cardId) {
