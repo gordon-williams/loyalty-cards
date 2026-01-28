@@ -301,7 +301,7 @@
                 const moveY = firstCardTop - cardTop;
 
                 console.log('selectCard:', { firstCardTop, cardTop, moveY, index });
-                el.style.setProperty('transform', `translateY(${moveY}px)`, 'important');
+                el.style.setProperty('--move-y', `${moveY}px`);
             } else {
                 // All other cards slide away
                 el.classList.add('slide-away');
@@ -317,7 +317,7 @@
 
         document.querySelectorAll('.loyalty-card').forEach(el => {
             el.classList.remove('selected-card', 'slide-away');
-            el.style.transform = '';
+            el.style.removeProperty('--move-y');
         });
     }
 

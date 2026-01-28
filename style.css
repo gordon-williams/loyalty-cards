@@ -248,10 +248,13 @@ body {
     z-index: 1;
 }
 
-/* Selected card - will be positioned by JS */
+/* Selected card - positioned at top of container */
 .loyalty-card.selected-card {
     margin-top: 0;
     z-index: 100;
+    position: relative;
+    top: 0;
+    transform: translateY(var(--move-y, 0)) !important;
 }
 
 .card-header {
