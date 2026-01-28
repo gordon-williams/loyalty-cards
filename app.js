@@ -230,7 +230,7 @@
         // Generate preview barcode
         setTimeout(() => generatePreviewBarcode(card), 10);
 
-        // Long press to edit
+        // Long press to edit (touch devices)
         let pressTimer = null;
         let didLongPress = false;
 
@@ -249,6 +249,13 @@
 
         div.addEventListener('touchmove', () => {
             clearTimeout(pressTimer);
+        });
+
+        // Right-click to edit (desktop/simulator)
+        div.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            currentCard = card;
+            openEditCard();
         });
 
         // Click: select card if not selected, otherwise open fullscreen
