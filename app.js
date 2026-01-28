@@ -290,15 +290,11 @@
         allCards.forEach((el, index) => {
             if (el.dataset.id === cardId) {
                 el.classList.add('selected-card');
-                el.classList.remove('slide-up', 'slide-down');
-            } else if (index < selectedIndex) {
-                // Cards above selected slide up
-                el.classList.add('slide-up');
-                el.classList.remove('selected-card', 'slide-down');
+                el.classList.remove('slide-away');
             } else {
-                // Cards below selected slide down
-                el.classList.add('slide-down');
-                el.classList.remove('selected-card', 'slide-up');
+                // All other cards slide away
+                el.classList.add('slide-away');
+                el.classList.remove('selected-card');
             }
         });
     }
@@ -308,7 +304,7 @@
         currentCard = null;
 
         document.querySelectorAll('.loyalty-card').forEach(el => {
-            el.classList.remove('selected-card', 'slide-up', 'slide-down');
+            el.classList.remove('selected-card', 'slide-away');
         });
     }
 

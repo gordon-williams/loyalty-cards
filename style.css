@@ -239,25 +239,18 @@ body {
     margin-top: 0;
 }
 
-/* Cards sliding up (above selected) */
-.loyalty-card.slide-up {
-    transform: translateY(-100%);
+/* All non-selected cards slide up and out */
+.loyalty-card.slide-away {
+    transform: translateY(-150%);
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
 }
 
-/* Cards sliding down (below selected) */
-.loyalty-card.slide-down {
-    transform: translateY(100%);
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-}
-
-/* Selected card */
+/* Selected card - stays in place at top */
 .loyalty-card.selected-card {
     margin-top: 0;
+    transform: translateY(0);
 }
 
 .card-header {
