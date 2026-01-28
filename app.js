@@ -230,8 +230,33 @@
         // Generate preview barcode
         setTimeout(() => generatePreviewBarcode(card), 10);
 
+        // Long press to edit
+        let pressTimer = null;
+        let didLongPress = false;
+
+        div.addEventListener('touchstart', (e) => {
+            didLongPress = false;
+            pressTimer = setTimeout(() => {
+                didLongPress = true;
+                currentCard = card;
+                openEditCard();
+            }, 500);
+        });
+
+        div.addEventListener('touchend', () => {
+            clearTimeout(pressTimer);
+        });
+
+        div.addEventListener('touchmove', () => {
+            clearTimeout(pressTimer);
+        });
+
         // Click: select card if not selected, otherwise open fullscreen
-        div.addEventListener('click', () => {
+        div.addEventListener('click', (e) => {
+            if (didLongPress) {
+                didLongPress = false;
+                return;
+            }
             if (topCardId !== card.id) {
                 selectCard(card.id);
             } else {
