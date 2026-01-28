@@ -287,14 +287,33 @@
         const allCards = Array.from(document.querySelectorAll('.loyalty-card'));
         const selectedIndex = allCards.findIndex(el => el.dataset.id === cardId);
 
+        // Calculate how far up the selected card needs to move
+        // Each card above it contributes: card height (approx 180px) minus overlap (120px) = 60px visible
+        // But first card has no negative margin, so it's full height visible
+        // Actually, we need to measure the actual offset from the top
+
+        const container = document.querySelector('.cards-container');
+        const containerTop = container.getBoundingClientRect().top;
+
         allCards.forEach((el, index) => {
             if (el.dataset.id === cardId) {
                 el.classList.add('selected-card');
                 el.classList.remove('slide-away');
+
+                // Calculate how far to move up to reach the top of the container
+                const cardTop = el.getBoundingClientRect().top;
+                const moveUp = cardTop - containerTop;
+
+                if (moveUp > 0) {
+                    el.style.transform = `translateY(-${moveUp}px)`;
+                } else {
+                    el.style.transform = '';
+                }
             } else {
                 // All other cards slide away
                 el.classList.add('slide-away');
                 el.classList.remove('selected-card');
+                el.style.transform = '';
             }
         });
     }
@@ -305,6 +324,7 @@
 
         document.querySelectorAll('.loyalty-card').forEach(el => {
             el.classList.remove('selected-card', 'slide-away');
+            el.style.transform = '';
         });
     }
 
