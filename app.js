@@ -285,23 +285,24 @@
         }
 
         const allCards = Array.from(document.querySelectorAll('.loyalty-card'));
-        const selectedIndex = allCards.findIndex(el => el.dataset.id === cardId);
 
-        // Get the position of the first card (top of the stack)
+        // Get the position of the first card (top of the stack) BEFORE any changes
         const firstCard = allCards[0];
         const firstCardTop = firstCard ? firstCard.getBoundingClientRect().top : 0;
 
-        allCards.forEach((el, index) => {
+        // Find the selected card and calculate its offset
+        const selectedEl = allCards.find(el => el.dataset.id === cardId);
+        const selectedCardTop = selectedEl ? selectedEl.getBoundingClientRect().top : 0;
+        const moveY = firstCardTop - selectedCardTop;
+
+        console.log('selectCard:', { firstCardTop, selectedCardTop, moveY });
+
+        // Apply all changes
+        allCards.forEach((el) => {
             if (el.dataset.id === cardId) {
                 el.classList.add('selected-card');
                 el.classList.remove('slide-away');
-
-                // Calculate how far to move up to reach the first card's position
-                const cardTop = el.getBoundingClientRect().top;
-                const moveY = firstCardTop - cardTop;
-
-                console.log('selectCard:', { firstCardTop, cardTop, moveY, index });
-                el.style.setProperty('--move-y', `${moveY}px`);
+                el.style.transform = `translateY(${moveY}px)`;
             } else {
                 // All other cards slide away
                 el.classList.add('slide-away');
@@ -317,7 +318,7 @@
 
         document.querySelectorAll('.loyalty-card').forEach(el => {
             el.classList.remove('selected-card', 'slide-away');
-            el.style.removeProperty('--move-y');
+            el.style.transform = '';
         });
     }
 

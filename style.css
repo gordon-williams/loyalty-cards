@@ -252,9 +252,6 @@ body {
 .loyalty-card.selected-card {
     margin-top: 0;
     z-index: 100;
-    position: relative;
-    top: 0;
-    transform: translateY(var(--move-y, 0)) !important;
 }
 
 .card-header {
