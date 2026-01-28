@@ -286,38 +286,15 @@
 
         const allCards = Array.from(document.querySelectorAll('.loyalty-card'));
 
-        // Get the position of the first card (top of the stack) BEFORE any changes
-        const firstCard = allCards[0];
-        const firstCardTop = firstCard ? firstCard.getBoundingClientRect().top : 0;
-
-        // Find the selected card and calculate its offset
-        const selectedEl = allCards.find(el => el.dataset.id === cardId);
-        const selectedCardTop = selectedEl ? selectedEl.getBoundingClientRect().top : 0;
-        const moveY = firstCardTop - selectedCardTop;
-
-        console.log('selectCard:', { firstCardTop, selectedCardTop, moveY });
-
-        // Debug: show values on screen
-        let debugEl = document.getElementById('debug-info');
-        if (!debugEl) {
-            debugEl = document.createElement('div');
-            debugEl.id = 'debug-info';
-            debugEl.style.cssText = 'position:fixed;top:60px;left:10px;background:red;color:white;padding:10px;z-index:9999;font-size:14px;';
-            document.body.appendChild(debugEl);
-        }
-        debugEl.innerHTML = `firstCardTop: ${firstCardTop.toFixed(0)}<br>selectedCardTop: ${selectedCardTop.toFixed(0)}<br>moveY: ${moveY.toFixed(0)}`;
-
         // Apply all changes
         allCards.forEach((el) => {
             if (el.dataset.id === cardId) {
                 el.classList.add('selected-card');
                 el.classList.remove('slide-away');
-                el.style.transform = `translateY(${moveY}px)`;
             } else {
                 // All other cards slide away
                 el.classList.add('slide-away');
                 el.classList.remove('selected-card');
-                el.style.transform = '';
             }
         });
     }
@@ -328,7 +305,6 @@
 
         document.querySelectorAll('.loyalty-card').forEach(el => {
             el.classList.remove('selected-card', 'slide-away');
-            el.style.transform = '';
         });
     }
 

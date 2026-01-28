@@ -252,6 +252,10 @@ body {
 .loyalty-card.selected-card {
     margin-top: 0;
     z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
 }
 
 .card-header {
