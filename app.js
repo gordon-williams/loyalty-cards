@@ -312,8 +312,17 @@
         topCardId = null;
         currentCard = null;
 
-        // Remove selected state and re-render cards with animation
-        renderCards();
+        // First hide the selected card with fade out
+        const selectedEl = document.querySelector('.loyalty-card.selected-card');
+        if (selectedEl) {
+            selectedEl.classList.add('fade-out');
+            // Wait for fade out, then re-render cards
+            setTimeout(() => {
+                renderCards();
+            }, 300);
+        } else {
+            renderCards();
+        }
     }
 
     function generatePreviewBarcode(card) {

@@ -283,6 +283,20 @@ body {
     }
 }
 
+/* Fade out for deselecting */
+.loyalty-card.fade-out {
+    animation: fadeOut 0.3s ease-out forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
 .card-header {
     padding: 12px 16px 16px;
     color: white;
