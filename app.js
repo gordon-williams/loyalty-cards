@@ -252,13 +252,21 @@
             saveCards();
         }
 
-        document.querySelectorAll('.loyalty-card').forEach(el => {
+        const allCards = Array.from(document.querySelectorAll('.loyalty-card'));
+        const selectedIndex = allCards.findIndex(el => el.dataset.id === cardId);
+
+        allCards.forEach((el, index) => {
             if (el.dataset.id === cardId) {
                 el.classList.add('selected-card');
-                el.classList.remove('hidden-card');
+                el.classList.remove('slide-up', 'slide-down');
+            } else if (index < selectedIndex) {
+                // Cards above selected slide up
+                el.classList.add('slide-up');
+                el.classList.remove('selected-card', 'slide-down');
             } else {
-                el.classList.add('hidden-card');
-                el.classList.remove('selected-card');
+                // Cards below selected slide down
+                el.classList.add('slide-down');
+                el.classList.remove('selected-card', 'slide-up');
             }
         });
     }
@@ -268,7 +276,7 @@
         currentCard = null;
 
         document.querySelectorAll('.loyalty-card').forEach(el => {
-            el.classList.remove('selected-card', 'hidden-card');
+            el.classList.remove('selected-card', 'slide-up', 'slide-down');
         });
     }
 

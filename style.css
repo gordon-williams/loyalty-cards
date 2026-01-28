@@ -227,15 +227,25 @@ body {
     position: relative;
     margin-top: -120px;
     z-index: 1;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
 
 .loyalty-card:first-child {
     margin-top: 0;
 }
 
-/* Hidden cards */
-.loyalty-card.hidden-card {
-    display: none;
+/* Cards sliding up (above selected) */
+.loyalty-card.slide-up {
+    transform: translateY(-300px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Cards sliding down (below selected) */
+.loyalty-card.slide-down {
+    transform: translateY(300px);
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* Selected card */
