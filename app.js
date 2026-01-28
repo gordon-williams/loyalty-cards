@@ -316,8 +316,9 @@
         const selectedEl = document.querySelector('.loyalty-card.selected-card');
         if (selectedEl) {
             selectedEl.classList.add('fade-out');
-            // Wait for fade out, then re-render cards
+            // Wait for fade out, then remove and re-render cards
             setTimeout(() => {
+                selectedEl.remove();
                 renderCards();
             }, 300);
         } else {
