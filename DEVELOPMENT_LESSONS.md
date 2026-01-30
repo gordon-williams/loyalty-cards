@@ -78,8 +78,48 @@ If an animation requires complex calculations and keeps failing, step back and s
 4. Claude analyzes frames to see what's actually happening
 5. Add visible version number to UI (`v20` etc.) to confirm correct version is deployed
 
+## JavaScript Event Handler Pitfalls
+
+### Debounced Functions Receive Event Objects
+
+**Problem**: When using `debounce(renderCards, 200)` as an event listener, the event object is passed as the first argument to `renderCards`. If `renderCards(animate = false)` expects a boolean, the event object is truthy, so `animate` becomes `true`.
+
+**Example failure**: Search input triggered card re-rendering with animation on every keystroke because the input event was passed as `animate = true`.
+
+```javascript
+// BAD - event object passed as first argument
+elements.searchInput.addEventListener('input', debounce(renderCards, 200));
+
+// GOOD - explicitly pass false
+elements.searchInput.addEventListener('input', debounce(() => renderCards(false), 200));
+```
+
+### Optimizing Re-renders
+
+**Problem**: Typing in search caused barcode to flash even when the same single card was displayed.
+
+**Solution**: Track which cards were last rendered and skip re-render if the list hasn't changed:
+
+```javascript
+let lastRenderedCardIds = [];
+
+function renderCards(animate = false) {
+    // ... filter cards ...
+
+    const newCardIds = filteredCards.map(c => c.id).join(',');
+    const cardListChanged = newCardIds !== lastRenderedCardIds.join(',');
+
+    if (!animate && !cardListChanged) {
+        return; // Skip unnecessary re-render
+    }
+
+    lastRenderedCardIds = filteredCards.map(c => c.id);
+    // ... render cards ...
+}
+```
+
 ## File Structure Notes
 
 - `style.css?v=N` and `app.js?v=N` - cache busters in index.html
-- Version number shown in header: `<span style="font-size:12px;opacity:0.5">v20</span>`
+- Version number shown in header: `<span style="font-size:12px;opacity:0.5">v23</span>`
 - GitIgnore folder for test videos and extracted frames
