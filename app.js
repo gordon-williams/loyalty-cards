@@ -127,6 +127,8 @@
     }
 
     // Card Rendering
+    let lastRenderedCardIds = [];
+
     function renderCards(animate = false) {
         // Reset top card when filters change
         topCardId = null;
@@ -162,6 +164,17 @@
         } else {
             filteredCards = sortCards(filteredCards);
         }
+
+        // Check if the card list has actually changed
+        const newCardIds = filteredCards.map(c => c.id).join(',');
+        const cardListChanged = newCardIds !== lastRenderedCardIds.join(',');
+
+        // Skip re-render if cards haven't changed (e.g., typing more in search that matches same card)
+        if (!animate && !cardListChanged) {
+            return;
+        }
+
+        lastRenderedCardIds = filteredCards.map(c => c.id);
 
         // Clear container
         elements.cardsContainer.innerHTML = '';
