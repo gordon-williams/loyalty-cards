@@ -74,7 +74,7 @@
     function init() {
         loadData();
         applyTheme();
-        renderCards();
+        renderCards(true); // Animate on app open
         setupEventListeners();
         registerServiceWorker();
         getCurrentLocation();
@@ -127,7 +127,7 @@
     }
 
     // Card Rendering
-    function renderCards() {
+    function renderCards(animate = false) {
         // Reset top card when filters change
         topCardId = null;
 
@@ -166,13 +166,16 @@
         // Clear container
         elements.cardsContainer.innerHTML = '';
 
+        // Only animate if requested AND more than one card
+        const shouldAnimate = animate && filteredCards.length > 1;
+
         if (filteredCards.length === 0) {
             elements.emptyState.style.display = 'flex';
             elements.cardsContainer.appendChild(elements.emptyState);
         } else {
             elements.emptyState.style.display = 'none';
             filteredCards.forEach((card, index) => {
-                const cardEl = createCardElement(card, true, index);
+                const cardEl = createCardElement(card, shouldAnimate, index);
                 elements.cardsContainer.appendChild(cardEl);
             });
         }
@@ -320,13 +323,13 @@
         const selectedEl = document.querySelector('.loyalty-card.selected-card');
         if (selectedEl) {
             selectedEl.classList.add('fade-out');
-            // Wait for fade out, then remove and re-render cards
+            // Wait for fade out, then remove and re-render cards with animation
             setTimeout(() => {
                 selectedEl.remove();
-                renderCards();
+                renderCards(true);
             }, 300);
         } else {
-            renderCards();
+            renderCards(true);
         }
     }
 
