@@ -924,7 +924,7 @@
         document.getElementById('settingsBtn').addEventListener('click', () => openModal(elements.settingsModal));
 
         // Search
-        elements.searchInput.addEventListener('input', debounce(renderCards, 200));
+        elements.searchInput.addEventListener('input', debounce(() => renderCards(false), 200));
 
         // Category filter
         elements.categoryFilter.addEventListener('click', (e) => {
